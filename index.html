@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title> PDACS PVWeb </title>
+    <script src="lib/3rd_party/jquery-1.7.2.min.js"></script>
+    <script src="lib/3rd_party/newt.js"></script>
+    <script src="lib/nersc_pvweb.js"></script>
+    <link type="text/css" href="lib/nersc_pvweb.css" rel="stylesheet" />
+    <script language="Javascript">
+        $(document).ready( function() {
+            // insert the job submit form
+            nersc_pvweb.set_web_host('missmarple.lbl.gov')
+            nersc_pvweb.create_submit_form($('#form_area'))
+            nersc_pvweb.set_job_table($('#job_table'))
+            nersc_pvweb.set_status_area($('#status_area'))
+        });
+   </script>
+
+   <style>
+       #status,#status_text { margin:1em 2em; }
+       #content-container {
+          background-color:white;
+          width:1024px;
+          margin: 0 auto;
+          padding:2em;
+       }
+       input, select { font-size:1.1em; }
+   </style>
+
+</head>
+
+<body>
+<table border="1">
+<tr><td id="form_area" style="vertical-align:top"></td><td id="job_table" style="vertical-align:top"></td></tr>
+</table>
+<div><pre id="status_area"></pre></div>
+</body>
+</html>
