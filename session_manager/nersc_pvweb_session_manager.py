@@ -514,7 +514,7 @@ def startWebServer(options, config):
     port     = int(config["configuration"]["port"])
 
     # Setup logging
-    logFileName = log_dir + os.sep + "tunnel_launcher.log"
+    logFileName = log_dir + os.sep + "nersc_pvweb_session_manager.log"
     formatting = '%(asctime)s:%(levelname)s:%(name)s:%(message)s'
     logging.basicConfig(level=logging.DEBUG, filename=logFileName, filemode='w', format=formatting)
     observer = log.PythonLoggingObserver()
