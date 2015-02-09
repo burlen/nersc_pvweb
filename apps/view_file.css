@@ -83,5 +83,5 @@ tbody, tfoot, thead, tr, th, td {
     position: relative;
     width: 25px;
     height: 25px;
-    background: url("images/open.png") no-repeat transparent;
+    background: url("../lib/images/open.png") no-repeat transparent;
 }
