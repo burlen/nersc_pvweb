@@ -1,0 +1,25 @@
+{
+    "resources": [ {"port_range": [9001, 9100], "host": "localhost"} ],
+    "sessionData": {
+      "updir": ""
+    },
+    "configuration": {
+      "log_dir": "/var/www/ParaView/logs",
+      "host": "localhost",
+      "port": 8080,
+      "endpoint": "connection_broker",
+      "sessionURL": "ws://paraview.lbl.gov/proxy?sessionId=${id}",
+      "timeout": 25,
+      "upload_dir": "",
+      "fields": ["file", "host", "port", "updir"],
+      "proxy_file": "/var/www/ParaView/proxy.txt"
+    },
+    "properties": {
+      "build_dir" : "",
+      "python_exec" : "",
+      "python_path": "",
+      "data_dir": "",
+      "secret": "vtkweb-secret"
+    },
+    "apps": {}
+}

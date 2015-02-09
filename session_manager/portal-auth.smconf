@@ -1,0 +1,25 @@
+{
+    "resources": [ {"port_range": [6001, 6100], "host": "localhost"} ],
+    "sessionData": {
+      "updir": ""
+    },
+    "configuration": {
+      "log_dir": "/usr/common/graphics/ParaView/PDACS/logs/",
+      "host": "localhost",
+      "port": 8001,
+      "endpoint": "connection_broker",
+      "sessionURL": "ws://portal-auth.nersc.gov:8000/proxy?sessionId=${id}",
+      "timeout": 300,
+      "upload_dir": "",
+      "fields": ["file", "host", "port", "updir"],
+      "proxy_file": "/usr/common/graphics/ParaView/PDACS/www/nersc_pvweb/proxy.txt"
+    },
+    "properties": {
+      "build_dir" : "",
+      "python_exec" : "",
+      "python_path": "",
+      "data_dir": "",
+      "secret": "vtkweb-secret"
+    },
+    "apps": {}
+}
