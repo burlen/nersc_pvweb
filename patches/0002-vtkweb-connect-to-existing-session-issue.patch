@@ -1,0 +1,32 @@
+From 7d9e34cb3d4b2cb7df7aef2de2fa8462bbf23222 Mon Sep 17 00:00:00 2001
+From: Burlen Loring <bloring@lbl.gov>
+Date: Mon, 26 Jan 2015 16:42:30 -0800
+Subject: [PATCH 2/2] vtkweb: connect to existing session issue
+
+when passing name=value pairs into vtkWeb.smartConnect via
+location URL, value's need to be encoded/decoded to handle the
+case when they contain some special chars, eg. ?,&,=. This
+occurs in particular when passing  sessionURL, whose value
+contains ? and =.
+
+Change-Id: I5027857658609727f3a7230faaab68bc9c02d609
+---
+ Web/JavaScript/Lib/vtkweb.js | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Web/JavaScript/Lib/vtkweb.js b/Web/JavaScript/Lib/vtkweb.js
+index 2631f62..9037997 100644
+--- a/Web/JavaScript/Lib/vtkweb.js
++++ b/Web/JavaScript/Lib/vtkweb.js
+@@ -47,7 +47,7 @@
+     udpateConnectionFromURL = function(connection) {
+         var params = extractURLParameters();
+         for(var key in params) {
+-            connection[key] = params[key];
++            connection[key] = decodeURIComponent(params[key]);
+         }
+     }
+ 
+-- 
+1.9.1
+

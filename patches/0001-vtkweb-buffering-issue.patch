@@ -1,0 +1,38 @@
+From 50705d6dd9d71a68790e27ef502e35ec153b4929 Mon Sep 17 00:00:00 2001
+From: Burlen Loring <bloring@lbl.gov>
+Date: Mon, 26 Jan 2015 16:37:55 -0800
+Subject: [PATCH 1/2] vtkweb: buffering issue
+
+the launched app signals he is ready to receive incoming http reqs
+by writing a "ready_line" into the log. the launcher reads the log
+scanning for this ready line. Buffering can prevent this from
+happening so trun off buffering on the log file.
+
+Change-Id: I26ede8d7e1518f9ed9c90bf836fdf1596e05fae1
+---
+ Web/Python/vtk/web/launcher.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Web/Python/vtk/web/launcher.py b/Web/Python/vtk/web/launcher.py
+index 8d8b5ff..05537bb 100755
+--- a/Web/Python/vtk/web/launcher.py
++++ b/Web/Python/vtk/web/launcher.py
+@@ -291,13 +291,13 @@ class ProcessManager(object):
+ 
+         # Create output log file
+         logFilePath = self._getLogFilePath(session['id'])
+-        with open(logFilePath, "a+") as log_file:
++        with open(logFilePath, "a+", 0) as log_file:
+             try:
+                 proc = subprocess.Popen(session['cmd'], stdout=log_file, stderr=log_file)
+                 self.processes[session['id']] = proc
+             except:
+                 logging.error("The command line failed")
+-                logging.error(''.join(map(str, session['cmd'])))
++                logging.error(' '.join(map(str, session['cmd'])))
+                 return None
+ 
+         return proc
+-- 
+1.9.1
+
