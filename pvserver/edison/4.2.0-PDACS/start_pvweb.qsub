@@ -1,0 +1,55 @@
+#PBS -S /bin/bash
+#PBS -j eo
+#PBS -V
+
+export PV_COMPUTE_HOST=`aprun -q /bin/hostname`
+export CRAY_ROOTFS=DSL
+export PATH=$PV_PATH:$PATH
+export LD_LIBRARY_PATH=$PV_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+export LP_NUM_THREADS=$PV_RENDER_THREADS
+
+echo "Starting ParaView..."
+echo $0
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+echo "PATH=$PATH"
+echo "PV_HOME=$PV_HOME"
+echo "PV_NCAT_PATH=$PV_NCAT_PATH"
+echo "PV_NCPUS=$PV_NCPUS"
+echo "PV_NCPUS_PER_SOCKET=$PV_NCPUS_PER_SOCKET"
+echo "PV_RENDER_THREADS=$PV_RENDER_THREADS"
+echo "PV_DATA_FILE=$PV_DATA_FILE"
+echo "PV_WEB_HOST=$PV_WEB_HOST"
+echo "PV_WEB_PORT=$PV_WEB_PORT"
+echo "PV_WEB_KEY=$PV_WEB_KEY"
+echo "PV_SERVER_PORT=$PV_SERVER_PORT"
+echo "PV_COMPUTE_HOST=$PV_COMPUTE_HOST"
+echo "PV_SERVER_PORT=$PV_SERVER_PORT"
+echo "ATP_ENABLED=$ATP_ENABLED"
+echo "CRAY_ROOTFS=$CRAY_ROOTFS"
+
+# open a channel *from portal-auth
+#ssh -v -o "ExitOnForwardFailure yes" -N -R $PV_WEB_PORT:$PV_COMPUTE_HOST:$PV_WEB_PORT $PV_WEB_HOST &
+ssh -v -i $PV_WEB_KEY -o "ExitOnForwardFailure yes" -N -R $PV_WEB_PORT:localhost:$PV_WEB_PORT $PV_WEB_HOST &
+SSH_PID=$!
+trap "kill $SSH_PID" EXIT
+
+#export PV_PLUGIN_DEBUG=1
+
+# start the server in the background
+aprun -n $PV_NCPUS -S $PV_NCPUS_PER_SOCKET \
+    pvserver --use-offscreen-rendering --server-port=$PV_SERVER_PORT &
+
+#
+#sleep 5m
+
+# start the client
+pvpython \
+    $PV_HOME/pdacs_pvweb.py \
+    --port $PV_WEB_PORT \
+    --ds-host $PV_COMPUTE_HOST \
+    --ds-port $PV_SERVER_PORT \
+    --data-dir $PV_HOME/data \
+    --authKey vtkweb-secret \
+    -f
+
+#    --file $PV_DATA_FILE \

@@ -1,0 +1,39 @@
+#PBS -S /bin/bash
+#PBS -j eo
+#PBS -V
+
+PV_MOM_HOST=`/bin/hostname`
+PV_MOM_PORT=$PV_LOGIN_PORT
+
+export PV_COMPUTE_HOST=`aprun -q /bin/hostname`
+
+echo "Forwarding port $PV_MOM_PORT to $PV_LOGIN_PORT on $PV_LOGIN_HOST"
+$PV_NCAT_PATH/ncat -vv -l $PV_MOM_PORT --sh-exec="$PV_NCAT_PATH/ncat -vv $PV_LOGIN_HOST $PV_LOGIN_PORT" &
+
+export CRAY_ROOTFS=DSL
+export PATH=$PV_PATH:$PATH
+export LD_LIBRARY_PATH=$PV_LD_LIBRARY_PATH:$LD_LIBRARY_PATH
+export LP_NUM_THREADS=$PV_RENDER_THREADS
+
+echo "Starting ParaView..."
+echo $0
+echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+echo "PATH=$PATH"
+echo "PV_HOME=$PV_HOME"
+echo "PV_NCAT_PATH=$PV_NCAT_PATH"
+echo "PV_NCPUS=$PV_NCPUS"
+echo "PV_NCPUS_PER_SOCKET=$PV_NCPUS_PER_SOCKET"
+echo "PV_LOGIN_PORT=$PV_LOGIN_PORT"
+echo "PV_RENDER_THREADS=$PV_RENDER_THREADS"
+echo "PV_LOGIN_HOST=$PV_LOGIN_HOST"
+echo "PV_MOM_PORT=$PV_MOM_PORT"
+echo "PV_MOM_HOST=$PV_MOM_HOST"
+echo "PV_COMPUTE_HOST=$PV_COMPUTE_HOST"
+echo "ATP_ENABLED=$ATP_ENABLED"
+echo "CRAY_ROOTFS=$CRAY_ROOTFS"
+
+
+#export PV_PLUGIN_DEBUG=1
+
+# start the server
+aprun -n $PV_NCPUS -S $PV_NCPUS_PER_SOCKET pvserver --reverse-connection --use-offscreen-rendering --server-port=$PV_MOM_PORT --client-host=$PV_MOM_HOST
