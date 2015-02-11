@@ -1,3 +1,9 @@
+.nersc_pvweb_pre {
+    widTh: 100%;
+    max-width: 800px;
+    white-space: pre-wrap;
+}
+
 .nersc_pvweb_thin_table {
     border : 0px solid black;
     border-collapse : collapse;
