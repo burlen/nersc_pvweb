@@ -1,0 +1,26 @@
+From 15462f963dabc51e155f3dd9551f2b6f41b8a7b4 Mon Sep 17 00:00:00 2001
+From: Burlen Loring <bloring@lbl.gov>
+Date: Wed, 11 Feb 2015 14:29:44 -0800
+Subject: [PATCH] Make connection timeout longer
+
+Change-Id: I9459107ad441241a831d609b81a2aed5eed077c1
+---
+ ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx b/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx
+index f84aff2..c75661e 100644
+--- a/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx
++++ b/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx
+@@ -103,7 +103,7 @@ vtkMultiProcessController* vtkTCPNetworkAccessManager::NewConnection(const char*
+       {
+       handshake = parameters["handshake"].c_str();
+       }
+-    int timeout_in_seconds = 60;
++    int timeout_in_seconds = 300;
+     if (parameters.find("timeout") != parameters.end())
+       {
+       timeout_in_seconds = atoi(parameters["timeout"].c_str());
+-- 
+1.9.1
+
