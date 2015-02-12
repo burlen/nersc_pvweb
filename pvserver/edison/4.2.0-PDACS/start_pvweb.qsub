@@ -43,13 +43,13 @@ aprun -n $PV_NCPUS -S $PV_NCPUS_PER_SOCKET \
 #sleep 5m
 
 # start the client
+#    $PV_HOME/pdacs_pvweb.py \
 pvpython \
-    $PV_HOME/pdacs_pvweb.py \
+    $PV_HOME/pdacs_web_visualizer.py \
     --port $PV_WEB_PORT \
     --ds-host $PV_COMPUTE_HOST \
     --ds-port $PV_SERVER_PORT \
     --data-dir $PV_HOME/data \
     --authKey vtkweb-secret \
+    --load-file $PV_DATA_FILE \
     -f
-
-#    --file $PV_DATA_FILE \
