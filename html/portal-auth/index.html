@@ -1,0 +1,36 @@
+<html>
+<head>
+<title> NERSC ParaView Web </title>
+
+<script src="lib/3rd_party/jquery-1.7.2.min.js"></script>
+<script src="lib/3rd_party/newt.js"></script>
+
+<!-- NERSC ParaVIew Web -->
+<script src="lib/lib_nersc_pvweb/nersc_pvweb.js"></script>
+<script src="lib/lib_nersc_pvweb/nersc_pvweb_ui.js"></script>
+<script language="Javascript">
+    $(document).ready( function() {
+        // configure core
+        nersc_pvweb.set_web_host('portal-auth.nersc.gov')
+        nersc_pvweb.set_paraview_version('4.2.0-PDACS')
+        nersc_pvweb.set_paraview_prefix('/usr/common/graphics/ParaView')
+        // configure ui
+        nersc_pvweb_ui.initialize()
+        nersc_pvweb_ui.set_web_app('apps/pvweb_visualizer.html')
+        nersc_pvweb_ui.create_submit_form($('#form_area'))
+        nersc_pvweb_ui.create_job_table($('#job_table'))
+    });
+</script>
+
+<link type="text/css" href="lib/lib_nersc_pvweb/nersc_pvweb_ui.css" rel="stylesheet" />
+
+</head>
+<body>
+<table border="0">
+<tr>
+<td id="form_area" style="vertical-align:top"></td>
+<td id="job_table" style="vertical-align:top"></td>
+</tr>
+</table>
+</body>
+</html>
