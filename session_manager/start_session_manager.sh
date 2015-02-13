@@ -14,10 +14,8 @@ nersc_pvweb_home=$2
 sm_home=$nersc_pvweb_home/session_manager
 nersc_host=$3
 
-#nohup \
-
+nohup \
     $pv_home/bin/pvpython \
         $sm_home/nersc_pvweb_session_manager.py \
-        -d $sm_home/$nersc_host.smconf \
-
-#        > nohup2.out 2>&1 &
+        $sm_home/$nersc_host.smconf \
+        > /dev/null 2>&1 &
