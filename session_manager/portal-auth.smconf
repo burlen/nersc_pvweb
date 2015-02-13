@@ -8,7 +8,7 @@
       "host": "localhost",
       "port": 8001,
       "endpoint": "connection_broker",
-      "sessionURL": "ws://portal-auth.nersc.gov:8000/proxy?sessionId=${id}",
+      "sessionURL": "wss://portal-auth.nersc.gov:8000/proxy?sessionId=${id}",
       "timeout": 300,
       "upload_dir": "",
       "fields": ["file", "host", "port", "updir"],
