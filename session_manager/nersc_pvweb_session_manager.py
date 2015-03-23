@@ -320,7 +320,13 @@ class ConnectionBroker(resource.Resource, object):
     def render_GET(self, request):
 
         sys.stderr.write('render_GET\n')
-        sys.stderr.write('reaquest=%s\n'%(request))
+        sys.stderr.write('request=%s\n'%(request))
+
+        # inject cross origin headers
+        request.setHeader('Access-Control-Allow-Origin', '*')
+        request.setHeader('Access-Control-Allow-Methods', 'GET')
+        request.setHeader('Access-Control-Allow-Headers', 'x-prototype-version,x-requested-with')
+        request.setHeader('Access-Control-Max-Age', 2520) # 42 hours
 
         # nersc specific, respond to some actions
         # get the action
@@ -482,6 +488,12 @@ class ConnectionBroker(resource.Resource, object):
 
         sys.stderr.write('render_DELETE\n')
         sys.stderr.write('reaquest=%s\n'%(request))
+
+        # inject cross origin headers
+        request.setHeader('Access-Control-Allow-Origin', '*')
+        request.setHeader('Access-Control-Allow-Methods', 'GET')
+        request.setHeader('Access-Control-Allow-Headers', 'x-prototype-version,x-requested-with')
+        request.setHeader('Access-Control-Max-Age', 2520) # 42 hours
 
         session_id = extractSessionId(request)
 
